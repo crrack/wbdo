@@ -9,11 +9,13 @@
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
+        "intervention/image": "^2.5",
         "kalnoy/nestedset": "^5.0",
         "laravel/framework": "^8.12",
         "laravel/tinker": "^2.5",
         "livewire/livewire": "^2.4",
-        "spatie/laravel-translatable": "^4.6"
+        "spatie/laravel-translatable": "^4.6",
+        "webdo-cz/tall-flash": "9999999-dev"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
