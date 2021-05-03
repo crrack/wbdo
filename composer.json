@@ -12,6 +12,8 @@
         "intervention/image": "^2.5",
         "kalnoy/nestedset": "^5.0",
         "laravel/framework": "^8.12",
+        "laravel/jetstream": "^2.3",
+        "laravel/sanctum": "^2.6",
         "laravel/tinker": "^2.5",
         "livewire/livewire": "^2.4",
         "spatie/laravel-translatable": "^4.6",

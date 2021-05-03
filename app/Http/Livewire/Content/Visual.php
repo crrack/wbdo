@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Content;
 
 use App\Models\ContentVersion;
 use App\Models\Content;
@@ -12,7 +12,7 @@ use App\Actions\Content\Submit;
 use Livewire\WithFileUploads;
 use Livewire\Component;
 
-class ContentForm extends Component
+class Visual extends Component
 {
     use WithFileUploads;
     use Sort, Create, Submit;
@@ -37,6 +37,6 @@ class ContentForm extends Component
 
     public function render()
     {
-        return view('livewire.content.index');
+        return view('livewire.content.visual')->layout('layouts.app', ['fullscreen' => true,]);
     }
 }
