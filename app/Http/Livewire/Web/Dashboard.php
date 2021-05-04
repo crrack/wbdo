@@ -40,6 +40,6 @@ class Dashboard extends Component
 
     public function render()
     {
-        return view('web.dashboard');
+        return view('livewire.web.dashboard');
     }
 }
