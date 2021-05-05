@@ -24,7 +24,8 @@ trait Create
             'page' => 'index',
             'order' => null,
             'parent_id' => (int)$this->group,
-            'status' => 'temp'
+            'status' => 'temp',
+            'version_id' => (int)$this->version->id,
         ];
 
         $record = Content::create($record);

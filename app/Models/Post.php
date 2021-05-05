@@ -23,10 +23,15 @@ class Post extends Model
         return $this->hasMany('App\Models\File')->orderBy('created_at', 'desc');
     }
 
-    public function variants()
+    public function contentVersions()
     {
-        return $this->hasMany('App\Models\Eshop\Variant', 'product_id');
+        return $this->hasMany('App\Models\ContentVersion', 'post_id');
     }
+
+    // public function variants()
+    // {
+    //     return $this->hasMany('App\Models\Eshop\Variant', 'product_id');
+    // }
 
     // public function thumbnail()
     // {

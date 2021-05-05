@@ -2,8 +2,9 @@
 
 namespace App\Http\Livewire\Content;
 
-use App\Models\ContentVersion;
+use App\Models\Post;
 use App\Models\Content;
+use App\Models\ContentVersion;
 
 use App\Actions\Content\Sort;
 use App\Actions\Content\Create;
@@ -17,7 +18,7 @@ class Visual extends Component
     use WithFileUploads;
     use Sort, Create, Submit;
 
-    public $page, $version;
+    public $post, $version;
 
     public $developer = false;
     public $group = null;
@@ -26,13 +27,12 @@ class Visual extends Component
 
     public $state = [];
 
-    public function mount($page, $version)
+    public function mount($post, $version)
     {
-        $this->page = $page;
-        
-        $this->version = ContentVersion::where('page_id', $page)->findOrFail($version)->id;
+        $this->post = Post::findOrFail($post);
+        $this->version = $this->post->contentVersions()->findOrFail($version);
 
-        $this->state = Content::where('page_id', $this->version)->where('status', 'production')->get(['id','type','name','label','value','parent_id','order'])->keyBy('id')->toArray();
+        $this->state = Content::where('version_id', $this->version->id)->where('status', 'production')->get(['id','type','name','label','value','parent_id','order'])->keyBy('id')->toArray();
     }
 
     public function render()

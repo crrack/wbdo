@@ -1,5 +1,7 @@
 <div class="flex items-center justify-between w-full h-20 px-6 bg-white">
-    <p class="pl-2 text-lg font-bold text-gray-700">Hlavní stránka</p>
+    <h1 class="pl-2 text-xl font-bold tracking-wide text-blue-gray-900">
+        {{ $post->title }} - <span class="text-lg font-normal">{{ $version->name }}</span>
+    </h1>
     <div class="flex items-center space-x-4">
         <div class="relative">
             <button @click="langModal = !langModal" class="space-x-2 transition duration-300 bg-white btn group hover:shadow-sm">
@@ -29,9 +31,9 @@
             </div>
         </div>
         <div class="w-px h-6 bg-gray-300"></div>
-        <button class="transition duration-300 bg-light-blue-100 text-light-blue-500 btn hover:text-light-blue-600">
+        <a href="{{ url('web/pages') }}" class="transition duration-300 bg-light-blue-100 text-light-blue-500 btn hover:text-light-blue-600">
             <span class="px-3 py-1">Zrušit</span>
-        </button>
+        </a>
         <button wire:click="submit" type="button" class="transition duration-300 bg-green-500 btn hover:bg-green-600 text-green-50 hover:text-white">
             <span class="px-3 py-1">Uložit</span>
             <x-loading-spin size="6" target="submit" />

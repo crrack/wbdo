@@ -20,6 +20,7 @@ class Content extends Model
         'page',
         'type',
         'parent_id',
+        'version_id',
         'order',
         'status',
     ]; 
