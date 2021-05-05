@@ -11,11 +11,17 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
         <!-- Styles -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+        <link href="https://cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet">
+        <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
-
         @livewireStyles
 
         <!-- Scripts -->
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+        <script src="https://npmcdn.com/flatpickr/dist/l10n/cs.js"></script>
+        <script src="https://cdn.quilljs.com/1.0.0/quill.js"></script>
+        <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
         <script src="{{ mix('js/app.js') }}" defer></script>
         @livewireScripts
     </head>
@@ -42,7 +48,7 @@
                 </aside>
                 <main class="w-full">
                     <div class="flex items-center justify-between px-6 py-3 mt-20 md:px-12 md:bg-gray-50 md:mt-0">
-                        <h1 class="py-2 text-xl text-blue-gray-900">
+                        <h1 class="py-2 text-xl font-bold text-blue-gray-900">
                             @yield('title')
                         </h1>
                         <div class="hidden md:block">

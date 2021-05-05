@@ -20,6 +20,8 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::get('/web/dashboard', \App\Http\Livewire\Web\Dashboard::class)->name('web.dashboard');
 
+    Route::get('/web/pages', \App\Http\Livewire\Web\Pages::class);
+
     Route::get('/content/{post}/{version}', \App\Http\Livewire\Content\Visual::class);
 
     Route::get('/user/profile', \App\Http\Livewire\User\Profile::class)->name('profile.show');
