@@ -6,7 +6,7 @@
                     {{ $element['label'] }}
                 </p>
             @endif
-            @includeIf('content.form.' . $element['type'])
+            @includeIf('includes.content.form.' . $element['type'])
         </div>
     @endif
 @endforeach

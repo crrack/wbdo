@@ -7,7 +7,7 @@
     }"
 >
 
-    @include('content.header')
+    @include('includes.content.header')
 
     <div class="">
     </div>
@@ -38,10 +38,10 @@
                 </button>
             @endif
             @if($developer)
-                @include('content.developer')
+                @include('includes.content.developer')
             @else
                 <div class="p-5">
-                    @include('content.form')
+                    @include('includes.content.form')
                 </div>
                 
             @endif

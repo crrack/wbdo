@@ -36,24 +36,24 @@
                 >
                     <div class="p-1 -mt-2 space-y-1 text-gray-400 bg-gray-100 rounded-b-lg cursor-default draggable-mirror-hide">
 
-                        @include('content.developer.form')
+                        @include('includes.content.developer.form')
 
                         @if($element['type'] == 'list' && !($state[$element['id']]['delete'] ?? false))
                             <div class="p-3" x-show="!open">
-                                @include('content.developer.list')
+                                @include('includes.content.developer.list')
                             </div>
                         @endif
                     </div>
 
-                    @include('content.developer.item')
+                    @include('includes.content.developer.item')
                 </div>
             </div>
         @endforeach
     </div>
     @if(($state[$group]['type'] ?? null) == 'list')
-        @include('content.developer.add-group')
+        @include('includes.content.developer.add-group')
     @else
-        @include('content.developer.add-element')
+        @include('includes.content.developer.add-element')
     @endif
     
 </div>

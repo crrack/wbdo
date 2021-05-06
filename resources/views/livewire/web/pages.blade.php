@@ -16,7 +16,7 @@
                 @include('pages.seo')
             @endif
         </div>
-        @include('pages.list')
+        @include('includes.pages.list')
     </div>
     <x-layout.page-title>
         <div>Komponenty</div>
@@ -27,9 +27,9 @@
         </div>
     </x-layout.page-title>
     <div class="mb-12">
-        @include('pages.components.list')
+        @include('includes.pages.components.list')
     </div>
     <div>
-        @include('pages.create')
+        @include('includes.pages.create')
     </div>
 </div>
