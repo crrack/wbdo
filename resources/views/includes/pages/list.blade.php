@@ -9,7 +9,7 @@
             }
         }
     }" 
-    class="mb-4 space-y-3"
+    class="mb-4 space-y-2"
 >
     @foreach($pages as $key => $page)
         <div class="flex flex-col">

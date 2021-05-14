@@ -1,0 +1,106 @@
+<?php
+
+namespace App\Actions\Form;
+
+use App\Models\Post;
+use App\Models\File;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Validator;
+use Auth;
+
+trait Submit
+{
+    public function submit() 
+    {
+        Validator::make($this->state, [
+            'title' => 'required',
+            'body' => 'required',
+        ])->validate();
+
+        if($this->state['custom_teaser']) {
+            $this->state['teaser'] = $this->teaser;
+        }
+
+        if($this->method == 'edit') {
+            $record = Post::findOrFail($this->state['id']);
+        }else {
+            $record = new Post;
+        }
+        $record->id = $this->state['id'];
+        $record->type = 'article';
+        $record->title = $this->state['title'];
+        $record->teaser = $this->state['teaser'] ?? null;
+        $record->custom_teaser = $this->state['custom_teaser'];
+        $record->body = $this->state['body'];
+        $record->status = $this->state['status'];
+        $record->slug = $this->getSlugs();
+
+        $record->page_title = $this->state['page_title'] ?? null;
+        $record->meta_title = $this->state['meta_title'] ?? null;
+        $record->meta_description = $this->state['meta_description'] ?? null;
+        $record->meta_keywords = $this->state['meta_keywords'] ?? null;
+        
+        if(isset($this->state['published_at']) && $this->state['published_at'] != null) {
+            $record->published_at = $this->state['published_at'];
+        }else {
+            $record->published_at = now();
+        }
+
+        if($this->method == "create") {
+            $record->user_id = Auth::id();
+        }
+
+        $record->save();
+
+        $record->terms()->sync($this->state['terms']);
+
+        if($this->state['thumbnail']['static'] ?? false){
+            $this->saveImage($this->state['thumbnail']['static'], 'thumbnail', 'image', true);
+            if(isset($this->state['thumbnail']['prev-static'])) $this->state['thumbnail']['prev-static']['delete'] = true;
+        }
+
+        if($this->state['thumbnail']['hover'] ?? false){
+            $this->saveImage($this->state['thumbnail']['hover'], 'hover-thumbnail', 'image', true);
+            if(isset($this->state['thumbnail']['prev-hover'])) $this->state['thumbnail']['prev-hover']['delete'] = true;
+        }
+
+        foreach($this->upload['gallery'] as $key => $image) {
+            if($image) $this->saveImage($image, 'gallery', 'image', true, $key);
+        }
+        foreach($this->upload['files'] as $key => $file) {
+            if($file) $this->saveFile($image, 'files', 'file', true, $key);
+        }
+
+        if($this->method == "edit") {
+            if($this->state['thumbnail']['prev-static']['delete'] ?? false){
+                $this->deleteFile($this->state['thumbnail']['prev-static']);
+            }
+            if($this->state['thumbnail']['prev-hover']['delete'] ?? false){
+                $this->deleteFile($this->state['thumbnail']['prev-hover']);
+            }
+            foreach(collect(array_merge($this->state['gallery'], $this->state['files']))->where('delete', true) as $file) {
+                $this->deleteFile($file);
+            }
+        }
+
+        flashSuccess([
+            'title' => 'Příspěvek vytvořen',
+            'message' => 'Nový příspěvek byl úspěšně vytvořen',
+        ]);
+
+        return redirect()->to('web/articles');
+    }
+
+    public function getSlugs()
+    {
+        $slugs = [];
+        foreach($this->state['title'] as $lang => $title) {
+            if($this->state['slug'][$lang] ?? false) {
+                $slugs[$lang] = Str::slug($this->state['slug'][$lang]);
+            }else {
+                $slugs[$lang] = Str::slug($this->state['title'][$lang]);
+            }
+        }
+        return $slugs;
+    }
+}

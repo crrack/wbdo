@@ -2,11 +2,16 @@
 
 namespace App\Models;
 
+use Spatie\Translatable\HasTranslations;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
+    use HasTranslations;
+
     public $incrementing = false;
+
+    public $translatable = ['title','teaser','body','slug','page_title','meta_title','meta_description','meta_keywords'];
 
     public function user()
     {

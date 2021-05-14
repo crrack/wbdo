@@ -14,7 +14,7 @@ class Dashboard extends Component
     public $lastEdit;
 
     public function mount() {
-        $this->posts = Post::where('type', 'post')->count();
+        $this->posts = Post::where('type', 'article')->count();
         $this->pages = Post::where('type', 'page')->count();
         $this->events = Post::where('type', 'event')->count();
         $post = Post::orderBy('updated_at', 'desc')->first();
