@@ -139,9 +139,9 @@
     background: #f9fafb;
     border: 0;
     border-radius: 8px 8px 0 0;
-    border-top: 2px solid #d1d5db;
-    border-left: 2px solid #d1d5db;
-    border-right: 2px solid #d1d5db;
+    border-top: 1px solid #d1d5db;
+    border-left: 1px solid #d1d5db;
+    border-right: 1px solid #d1d5db;
     padding: 12px;
 }
 
@@ -151,7 +151,7 @@
 
 .ql-container.ql-snow {
     background: #fff;
-    border: 2px solid #d1d5db;
+    border: 1px solid #d1d5db;
     border-radius: 0 0 8px 8px;
     height: 16rem;
 }

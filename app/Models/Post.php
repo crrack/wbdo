@@ -33,10 +33,20 @@ class Post extends Model
         return $this->hasMany('App\Models\ContentVersion', 'post_id');
     }
 
-    // public function variants()
-    // {
-    //     return $this->hasMany('App\Models\Eshop\Variant', 'product_id');
-    // }
+    public function variant()
+    {
+        return $this->hasOne('App\Models\Eshop\ProductVariant', 'product_id')->where('name', 'one-variant');
+    }
+
+    public function variants()
+    {
+        return $this->hasMany('App\Models\Eshop\ProductVariant', 'product_id')->where('name', '!=', 'one-variant');
+    }
+
+    public function children()
+    {
+        return $this->belongsToMany('App\Models\Post', 'post_relations', 'parent_post_id', 'child_post_id');
+    }
 
     // public function thumbnail()
     // {

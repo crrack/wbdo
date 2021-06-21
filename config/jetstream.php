@@ -58,4 +58,8 @@ return [
 
     'profile_photo_disk' => 'public',
 
+    'views' => [
+        'logout-other-browser-sessions-form' => 'includes.profile.logout-other-browser-sessions-form',
+    ],
+
 ];

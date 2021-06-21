@@ -27,7 +27,7 @@ trait Init
         $this->terms = Term::where('post_type', $this->type)->get();
 
         if($this->method == "edit") {
-            $state = Post::findOrFail($this->uid);
+            $state = Post::with(['variant', 'variants'])->findOrFail($this->uid);
             $this->state = $state->toArray();
             if($state->custom_teaser) {
                 $this->teaser = $state->teaser;

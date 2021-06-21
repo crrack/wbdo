@@ -4,6 +4,7 @@ namespace App\Actions\Form;
 
 use App\Models\Post;
 use App\Models\File;
+use App\Models\Eshop\ProductVariant;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 use Auth;
@@ -27,7 +28,7 @@ trait Submit
             $record = new Post;
         }
         $record->id = $this->state['id'];
-        $record->type = 'article';
+        $record->type = $this->type;
         $record->title = $this->state['title'];
         $record->teaser = $this->state['teaser'] ?? null;
         $record->custom_teaser = $this->state['custom_teaser'];
@@ -83,12 +84,39 @@ trait Submit
             }
         }
 
+        if(isset($this->oneVariant)) {
+            if($this->oneVariant) {
+                Validator::make($this->state['variant'], [
+                    'VAT' => 'required',
+                    'price' => 'required|numeric',
+                    'buy_price' => 'required|numeric',
+                    'availability' => 'required',
+                    'availability_empty' => 'required',
+                ])->validate();
+                $this->state['variant']['product_id'] = $this->state['id'];
+                $this->state['variant']['name'] = 'one-variant';
+                ProductVariant::updateOrCreate([
+                    'id' => $this->state['variant']['id'] ?? false,
+                ], $this->state['variant']);
+            }else {
+                foreach($this->state['variants'] as $variant) {
+                    if(isset($variant['key'])) {
+                        unset($variant['key']);
+                    }
+                    $variant['product_id'] = $this->state['id'];
+                    ProductVariant::updateOrCreate([
+                        'id' => $variant['id'] ?? false,
+                    ], $variant);
+                }
+            }
+        }
+
         flashSuccess([
             'title' => 'Příspěvek vytvořen',
             'message' => 'Nový příspěvek byl úspěšně vytvořen',
         ]);
 
-        return redirect()->to('web/articles');
+        return redirect()->to($this->section . '/' . $this->type . 's');
     }
 
     public function getSlugs()

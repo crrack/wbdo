@@ -32,6 +32,10 @@ module.exports = {
         },
     },
     
-    variants: {},
+    variants: {
+        extend: {
+            backgroundColor: ['disabled']
+        }
+    },
     plugins: [require('@tailwindcss/line-clamp'), require('@tailwindcss/typography')],
 }

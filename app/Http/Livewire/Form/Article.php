@@ -16,6 +16,7 @@ class Article extends Component
 
     public $method, $uid = null;
     public $type = 'article';
+    public $section = 'web';
 
     public $lang = 'cs';
 

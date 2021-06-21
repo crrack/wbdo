@@ -1,4 +1,4 @@
-<div class="flex items-center justify-between w-full h-20 px-6 bg-white">
+<div class="flex items-center justify-between w-full h-20 px-6 bg-white shadow-sm">
     <h1 class="pl-4 text-xl font-bold tracking-wide text-blue-gray-900">
         Vytvořit příspěvek
     </h1>
@@ -31,7 +31,7 @@
             </div>
         </div>
         <div class="w-px h-6 bg-gray-300"></div>
-        <a href="{{ url('web/articles') }}" class="transition duration-300 bg-light-blue-100 text-light-blue-500 btn hover:text-light-blue-600">
+        <a href="{{ url($section . '/' . $type . 's') }}" class="transition duration-300 bg-light-blue-100 text-light-blue-500 btn hover:text-light-blue-600">
             <span class="px-3 py-1">Zrušit</span>
         </a>
         <button wire:click="submit" type="button" class="transition duration-300 bg-green-500 btn hover:bg-green-600 text-green-50 hover:text-white">
