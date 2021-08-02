@@ -8,6 +8,9 @@ use App\Models\Eshop\OrderAddress;
 use Livewire\WithPagination;
 use Livewire\Component;
 
+use SoapClient;
+use SoapFault;
+
 class Orders extends Component
 {
     use WithPagination;
@@ -28,6 +31,44 @@ class Orders extends Component
     public $select = [];
     public $filter = [];
     public $filterForm = ['status'=>[]];
+
+    public function submitPackageZasilkovna()
+    {
+        $gw = new SoapClient('http://www.zasilkovna.cz/api/soap.wsdl');
+        $apiPassword = "3120a6b3c3b20d97392425ce88fa0991";
+
+        try {
+            $packet = $gw->createPacket($apiPassword, array(
+                'number' => $this->order->payment_code,
+                'name' => $this->order->address['delivery']->name ?? $this->order->address['order']->name,
+                'surname' => $this->order->address['delivery']->surname ?? $this->order->address['order']->surname,
+                'email' => $this->order->email,
+                'phone' => $this->order->telephone,
+                'addressId' => $this->order->shipment->name == 'doruceni-domu' ? 106 : $this->order->shipment_code,
+                'street' => $this->order->address['delivery']->street ?? $this->order->address['order']->street,
+                'houseNumber' => $this->order->address['delivery']->number ?? $this->order->address['order']->number,
+                'city' => $this->order->address['delivery']->city ?? $this->order->address['order']->city,
+                'zip' => $this->order->address['delivery']->post_code ?? $this->order->address['order']->post_code,
+                'cod' => $this->order->payment->name == 'on-delivery' ? $this->order->total : 0,
+                'value' => $this->order->total
+            ));
+        }
+        catch(SoapFault $e) {
+            return flashError([
+                'title' => 'Chyba při podání!',
+                'message' => 'Nepodařilo se podat zásilku, můžete to udělat ručně.',
+            ], $this);
+        }
+
+        $this->order->status = 'packing';
+        $this->order->save();
+        $this->status = array_search('packing', $this->statuses);
+
+        return flashSuccess([
+            'title' => 'Zásilka úspěšně podána!',
+            'message' => 'Zásilka byla úspěšně nahrána do databáze Zásilkovny.',
+        ], $this);
+    }
 
     public function submitFilter()
     {

@@ -13,7 +13,7 @@
     <div class="mb-12">
         <div>
             @if($page)
-                @include('pages.seo')
+                @include('includes.pages.seo')
             @endif
         </div>
         @include('includes.pages.list')

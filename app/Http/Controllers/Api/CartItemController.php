@@ -26,7 +26,9 @@ class CartItemController extends Controller
         $item = $this->request->input('item');
         $order = $this->order;
 
-        $orderItem = OrderItem::where('order_id', $order->id)->where('product_id', $item['product'])->where('variant_id', $item['variant']);
+        $orderItem = OrderItem::where('order_id', $order->id)
+        ->where('product_id', $item['product'])
+        ->where('variant_id', $item['variant']);
 
         if($orderItem->exists()) {
             $orderItem = $orderItem->first();

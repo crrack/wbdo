@@ -10,7 +10,7 @@
                 <p class="font-bold">Detail košíku: {{ $cart->code }}</p>
                 <p class="text-sm">Zatím vyplněné údaje</p>
             </x-slot>
-            <div class="relative flex flex-col justify-between w-full sm:flex-row">
+            <div class="relative flex flex-col justify-between w-full">
                 <div class="flex justify-between">
                     <div class="w-1/2 text-sm leading-6">
                         {!! isset($cart->address['order']->name) || isset($cart->address['order']->surname) ? "<strong>Jméno</strong>: " : '' !!}

@@ -22,7 +22,7 @@ trait Create
         $version = new ContentVersion;
         $version->name = 'Hlavní verze';
         $version->slug = 'main';
-        $version->page_id = $record->id;
+        $version->post_id = $record->id;
         $version->type = 'main';
         $version->save();
 

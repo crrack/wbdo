@@ -117,18 +117,22 @@ class ContentController extends Controller
     }
 
     public function getPage($name) {
-        $state = Content::usingLocale('cs')->where('page', $name)->with('children')->get();
-
-        $page = Post::where('type', 'page')->where('slug', $name);
+        $page = Post::where('type', 'page')->where('slug', 'LIKE', '%' . $name . '%');
 
         if($page->exists()) {
-            $thumbnail = $page->first()->files->where('type', 'thumbnail')->first();
-            $meta = $page->first([
-                'page_title', 
-                'meta_title', 
-                'meta_description', 
-                'meta_keywords'
-            ])->toArray();
+            $page = $page->first();
+
+            $version = $page->contentVersions->where('slug', 'main')->first();
+
+            $state = Content::usingLocale('cs')->where('version_id', $version->id)->with('children')->get();
+
+            $thumbnail = $page->files->where('type', 'thumbnail')->first();
+            $meta = [
+                'page_title' => $page->page_title ? $page->page_title : config('option.title_prefix') . $page->title . config('option.title_suffix'),
+                'meta_title' => $page->meta_title ? $page->meta_title : $page->title, 
+                'meta_description' => $page->meta_description, 
+                'meta_keywords' => $page->meta_keywords
+            ];
             $meta['thumbnail'] = $thumbnail['full_path'] ?? null;
     
             $content = ContentResource::collection($state->toTree(null)->keyBy('name'));
@@ -143,7 +147,7 @@ class ContentController extends Controller
 
         if($page) {
             $meta = [
-                'page_title' => $page->page_title ? $page->page_title : $page->title,
+                'page_title' => $page->page_title ? $page->page_title : config('option.title_prefix') . $page->title . config('option.title_suffix'),
                 'meta_title' => $page->meta_title ? $page->page_title : $page->title, 
                 'meta_description' => $page->meta_description, 
                 'meta_keywords' => $page->meta_keywords

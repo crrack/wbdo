@@ -4,7 +4,7 @@
             <div class="px-6 py-8 sm:px-9">
                 <div class="flex items-center justify-between mb-6">
                     <div class="text-lg font-bold text-gray-800">
-                        Správa SEO: {{ $page['title'] }}
+                        Správa SEO: {{ $page['title']['cs'] }}
                     </div>
                     <button wire:click="$set('page', null)" class="flex items-center justify-center w-10 h-10 text-gray-700 rounded-full opacity-50 cursor-pointer hover:bg-gray-200">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

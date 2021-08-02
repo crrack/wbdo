@@ -27,13 +27,18 @@
                         aux.select();
                         document.execCommand('copy');
                         document.body.removeChild(aux);
-                        this.successCopy = true;
+                        if(this.successCopy == true) {
+                            this.successCopy = false;
+                            setTimeout(() => { this.successCopy = true; }, 100);
+                        }else {
+                            this.successCopy = true;
+                        }
                         setTimeout(() => { this.successCopy = false; }, 4000);
                     }
                 }"
                 class="relative flex flex-col justify-between sm:flex-row"
             >
-                <div x-show="successCopy" class="absolute inset-x-0 w-full text-sm font-bold text-center text-green-500 -top-5">
+                <div x-show.transition="successCopy" class="absolute inset-x-0 w-full text-sm font-bold text-center text-green-500 -top-5">
                     Údaj byl zkopírován do schránky!
                 </div>
                 <div class="text-sm leading-6">
@@ -43,46 +48,52 @@
                     <strong>Jméno</strong>: 
                     <span @click="copy($event.target.innerHTML)">{{ $order->address['order']->name }}</span> 
                     <span @click="copy($event.target.innerHTML)">{{ $order->address['order']->surname }}</span>
+                    <br>
                     @if(isset($order->address['delivery']->name) && isset($order->address['delivery']->surname))
-                    , <strong>Doručovací jméno</strong>: 
+                    <strong>Doručovací jméno</strong>: 
                     <span @click="copy($event.target.innerHTML)">{{ $order->address['delivery']->name }}</span> 
                     <span @click="copy($event.target.innerHTML)">{{ $order->address['delivery']->surname }}</span>
-                    @endif
                     <br>
+                    @endif
 
                     <strong>Adresa</strong>: 
                     <span @click="copy($event.target.innerHTML)">{{ $order->address['order']->street }}</span> 
                     <span @click="copy($event.target.innerHTML)">{{ $order->address['order']->number }}</span>, 
                     <span @click="copy($event.target.innerHTML)">{{ $order->address['order']->post_code }}</span> 
                     <span @click="copy($event.target.innerHTML)">{{ $order->address['order']->city }}</span>
+                    <br>
                     @if (isset($order->address['delivery']->street) || isset($order->address['delivery']->number) || isset($order->address['delivery']->post_code) || isset($order->address['delivery']->city))
-                        , <strong>Doručovací: adresa</strong>: 
+                        <strong>Doručovací: adresa</strong>: 
                         <span @click="copy($event.target.innerHTML)">{{ $order->address['delivery']->street }}</span> 
                         <span @click="copy($event.target.innerHTML)">{{ $order->address['delivery']->number }}</span>, 
                         <span @click="copy($event.target.innerHTML)">{{ $order->address['delivery']->post_code }}</span> 
                         <span @click="copy($event.target.innerHTML)">{{ $order->address['delivery']->city }}</span>
+                        <br>
                     @endif
-                    <br>
 
-                    <strong>Stát</strong>: {{ $order->address['order']->state }}
+                    <strong>Stát</strong>: {{ $order->address['order']->state }} <br>
                     @if (isset($order->address['delivery']->state))
-                    , <strong>Doručovací stát</strong>: {{ $order->address['delivery']->state }}
+                    <strong>Doručovací stát</strong>: {{ $order->address['delivery']->state }} <br>
                     @endif
-                    <br>
 
                     <strong>Způsob doručení</strong>: {{ $order->shipment->title }} <br>
                     <strong>Způsob platby</strong>: {{ $order->payment->title }} <br>
                     <strong>ID doručení</strong>: <span @click="copy($event.target.innerHTML)">{{ $order->shipment_code }}</span>  <br>
                     <strong>Variabilní symbol</strong>: <span @click="copy($event.target.innerHTML)">{{ $order->payment_code }}</span>  <br>
                 </div>
-                <div class="mt-2 space-y-2 text-sm leading-6 sm:text-right sm:mt-0">
-                    <a href="{{ url('invoice/' . (isset($order->invoice) ? 'show/' . $order->invoice->number : 'generate/' . $order->id) ) }}" target="_blank" class="flex items-center px-4 py-2 font-semibold text-gray-500 bg-gray-100 hover:bg-gray-200 rounded-xl">
+                <div class="flex flex-col items-end mt-2 space-y-2 text-sm leading-6 sm:text-right sm:mt-0">
+                    <button wire:click="submitPackageZasilkovna" type="button" class="flex px-4 py-2 font-semibold text-white bg-green-500 hover:bg-green-600 rounded-xl">
+                        Podat zásilku
+                    </button>
+                    <a href="{{ url('invoice/' . (isset($order->invoice) ? 'show/' . $order->invoice->number : 'generate/' . $order->id) ) }}" target="_blank" class="flex items-center flex-shrink px-4 py-2 font-semibold text-gray-500 bg-gray-100 hover:bg-gray-200 rounded-xl">
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
                         </svg>
                         Faktura
                     </a>
-                    <button wire:click="changeStatus('canceled', 0)" class="px-4 py-2 font-semibold text-white bg-red-500 hover:bg-red-600 rounded-xl">Storno</button>
+                    <button wire:click="changeStatus('canceled', 0)" class="px-4 py-2 font-semibold text-white bg-red-500 hover:bg-red-600 rounded-xl">
+                        Storno
+                    </button>
                 </div>
             </div>
             @if ($order->note)
