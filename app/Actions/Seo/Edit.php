@@ -13,9 +13,9 @@ trait Edit
     {
         $page = $this->pages->find($this->page['id']);
         $page->page_title = $this->page['page_title'] ?? '';
-        $page->meta_title = $this->page['meta_title'] ?? '';
-        $page->meta_description = $this->page['meta_description'] ?? '';
-        $page->meta_keywords = $this->page['meta_keywords'] ?? '';
+        $page->seo_title = $this->page['meta_title'] ?? '';
+        $page->seo_description = $this->page['meta_description'] ?? '';
+        $page->seo_keywords = $this->page['meta_keywords'] ?? '';
         $page->save();
 
         if(isset($this->page['thumbnail']['upload']) && $this->page['thumbnail']['upload']) {

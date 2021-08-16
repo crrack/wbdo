@@ -91,9 +91,9 @@ class ContentController extends Controller
 
         $this->return['meta'] = [
             'page_title' => $product->page_title ? $product->page_title : $product->title,
-            'meta_title' => $product->meta_title ? $product->page_title : $product->title,  
-            'meta_description' => $product->meta_description, 
-            'meta_keywords' => $product->meta_keywords
+            'seo_title' => $product->seo_title ? $product->page_title : $product->title,  
+            'seo_description' => $product->seo_description, 
+            'seo_keywords' => $product->seo_keywords
         ];
         $this->return['product'] = new ProductShowResource($product);
     }
@@ -129,9 +129,9 @@ class ContentController extends Controller
             $thumbnail = $page->files->where('type', 'thumbnail')->first();
             $meta = [
                 'page_title' => $page->page_title ? $page->page_title : config('option.title_prefix') . $page->title . config('option.title_suffix'),
-                'meta_title' => $page->meta_title ? $page->meta_title : $page->title, 
-                'meta_description' => $page->meta_description, 
-                'meta_keywords' => $page->meta_keywords
+                'seo_title' => $page->seo_title ? $page->seo_title : $page->title, 
+                'seo_description' => $page->seo_description, 
+                'seo_keywords' => $page->seo_keywords
             ];
             $meta['thumbnail'] = $thumbnail['full_path'] ?? null;
     

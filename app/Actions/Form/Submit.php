@@ -37,9 +37,9 @@ trait Submit
         $record->slug = $this->getSlugs();
 
         $record->page_title = $this->state['page_title'] ?? null;
-        $record->meta_title = $this->state['meta_title'] ?? null;
-        $record->meta_description = $this->state['meta_description'] ?? null;
-        $record->meta_keywords = $this->state['meta_keywords'] ?? null;
+        $record->seo_title = $this->state['meta_title'] ?? null;
+        $record->seo_description = $this->state['meta_description'] ?? null;
+        $record->seo_keywords = $this->state['meta_keywords'] ?? null;
         
         if(isset($this->state['published_at']) && $this->state['published_at'] != null) {
             $record->published_at = $this->state['published_at'];
