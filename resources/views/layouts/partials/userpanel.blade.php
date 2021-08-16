@@ -1,7 +1,7 @@
 <div class="flex items-center">
     <span class="inline-flex items-center justify-center flex-none w-12 h-12 rounded-full bg-light-blue-200">
         <span class="text-xl font-medium leading-none text-light-blue-500">
-            {{ substr(explode(" ", Auth::user()->name)[0], 0, 1) . substr(explode(" ", Auth::user()->name)[1], 0, 2) }}
+            {{ substr(explode(" ", Auth::user()->name)[0], 0, 1) ?? null . substr(explode(" ", Auth::user()->name)[1], 0, 2) ?? null }}
         </span>
     </span>
     <div class="ml-3">
