@@ -28,3 +28,5 @@ Route::post('order/submit', [\App\Http\Controllers\Api\OrderController::class, '
 
 Route::get('content/page/{name}', [\App\Http\Controllers\Api\ContentController::class, 'page']);
 Route::post('content', [\App\Http\Controllers\Api\ContentController::class, 'handle']);
+
+Route::post('contact/store', [\App\Http\Controllers\Api\ContactController::class, 'store']);
